@@ -1,8 +1,12 @@
 pragma solidity ^0.4.4;
 
 
-contract roulette {
-  function roulette() {
+contract Roulette {
+  constructor() {
     // constructor
+  }
+
+  function create() {
+    
   }
 }
