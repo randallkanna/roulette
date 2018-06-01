@@ -1,19 +1,19 @@
-var Roulette = artifacts.require('../Roulette.sol');
+var Donate = artifacts.require('../Donate.sol');
 
-contract('Roulette', function(accounts) {
+contract('Donate', function(accounts) {
   var user1 = accounts[0];
   var user2 = accounts[1];
   var user3 = accounts[2];
 
   beforeEach(function() {
-    return Roulette.new()
+    return Donate.new()
     .then(function(instance) {
       contract = instance;
     });
   });
 
   it("should assert true", function(done) {
-    var roulette = Roulette.deployed();
+    var donate = Donate.deployed();
     assert.isTrue(true);
     done();
   });

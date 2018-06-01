@@ -1,5 +1,5 @@
-var Roulette = artifacts.require("./Roulette.sol");
+var Donate = artifacts.require("./Donate.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(Roulette);
+  deployer.deploy(Donate);
 };
