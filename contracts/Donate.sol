@@ -46,11 +46,11 @@ contract Donate {
 
   function generateCharityWinner() public {
    /* address charitySelected =  */
-
-   /* sendCharityFunds(charitySelected); */
+   // find winner
+   /* transferFundsToCharity(charitySelected); */
   }
 
-  function kill() public {
-    if(msg.sender == owner) selfdestruct(owner);
+  function transferFundsToCharity(address charity) public {
+    charity.transfer(totalDonated);
   }
 }
