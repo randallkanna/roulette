@@ -6,7 +6,7 @@ contract Donate {
   uint256 public minimumDonation;
   uint256 public totalDonated;
   uint256 public numberOfDonations;
-  uint256 public maxAmountOfDonations = 100;
+  uint256 public maxAmountOfDonations = 50;
   address[] public donaters;
 
   struct Donater {
@@ -36,6 +36,10 @@ contract Donate {
     if (numberOfDonations >= maxAmountOfDonations) generateCharityWinner();
   }
 
+  /* function getBalance() {
+
+  } */
+
   function checkDonaterExists(address donater) public constant returns(bool) {
     for(uint256 i = 0; i < donaters.length; i++){
       if(donaters[i] == donater) return true;
@@ -45,12 +49,19 @@ contract Donate {
   }
 
   function generateCharityWinner() public {
-   /* address charitySelected =  */
+    /* address charitySelected = */
    // find winner
-   /* transferFundsToCharity(charitySelected); */
+    /* transferFundsToCharity(charitySelected); */
   }
 
   function transferFundsToCharity(address charity) public {
     charity.transfer(totalDonated);
+    resetContractData();
+  }
+
+  function resetContractData(){
+    donaters.length = 0;
+    totalDonated = 0;
+    numberOfDonations = 0;
   }
 }
