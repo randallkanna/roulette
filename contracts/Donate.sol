@@ -3,7 +3,7 @@ pragma solidity ^0.4.4;
 
 contract Donate {
   address public owner;
-  uint256 public minimumDonation;
+  uint256 public minimumDonation = 2;
   uint256 public totalDonated;
   uint256 public numberOfDonations;
   uint256 public maxAmountOfDonations = 50;
@@ -35,10 +35,6 @@ contract Donate {
 
     if (numberOfDonations >= maxAmountOfDonations) generateCharityWinner();
   }
-
-  /* function getBalance() {
-
-  } */
 
   function checkDonaterExists(address donater) public constant returns(bool) {
     for(uint256 i = 0; i < donaters.length; i++){

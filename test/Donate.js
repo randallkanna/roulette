@@ -1,9 +1,10 @@
 var Donate = artifacts.require('../Donate.sol');
 
 contract('Donate', function(accounts) {
-  var user1 = accounts[0];
-  var user2 = accounts[1];
-  var user3 = accounts[2];
+  var donater1 = accounts[0];
+  var donater2 = accounts[1];
+  var charity = accounts[2];
+  var standardTestDonation = 2;
 
   beforeEach(function() {
     return Donate.new()
@@ -19,35 +20,25 @@ contract('Donate', function(accounts) {
   });
 
   it("should let a user deposit ether into the contract as a valid donater and subtract funds from their account", async function() {
-    donater1 = user1;
-    charity = user2;
-    donation = 1;
+    var ownerAccountOriginalBalance = web3.eth.getBalance(donater1).toNumber();
 
-    var ownerAccountOrigBalance = web3.eth.getBalance(donater1).toNumber();
-
-    let transaction = await contract.donate(charity, {from: donater1, value: donation});
+    let transaction = await contract.donate(charity, {from: donater1, value: standardTestDonation});
 
     var ownerAccountNewBalance = web3.eth.getBalance(donater1).toNumber();
     var tx = await web3.eth.getTransaction(transaction.tx);
     var gasUsed = tx.gasPrice.mul(transaction.receipt.gasUsed).toNumber();
 
-    // verify they exist in the contract
-    assert.strictEqual(ownerAccountOrigBalance - donation - gasUsed, ownerAccountNewBalance, 'should withdraw from donaters account');
+    assert.strictEqual(ownerAccountOriginalBalance - standardTestDonation - gasUsed, ownerAccountNewBalance, 'should withdraw from donaters account');
+    // TO DO - verify they exist in the contract struct
   });
 
-  it("should not let a user deposit into the contract if it does not meet the minimum donation", async function() {
-
+  it("should not let the same user donate twice", async function() {
+    try {
+      await contract.donate(charity, {from: donater1, value: standardTestDonation});
+      await contract.donate(charity, {from: donater1, value: standardTestDonation});
+      assert.ok(false, 'should throw an error when the same user tries to use contract')
+    } catch(error) {
+      assert.ok(true, 'expected throw')
+    }
   });
 });
-
-    // await contract.createRemittance(recipientAccount, puzzleSolution, { from: ownerAccount, value: sendAmount });
-    //
-    // var ownerAccountOriginalBalance = web3.eth.getBalance(ownerAccount).toNumber();
-    //
-    // let transaction = await contract.completeRemittance(puzzleSolution);
-    //
-    // var ownerAccountNewBalance = web3.eth.getBalance(ownerAccount).toNumber();
-    // var tx = await web3.eth.getTransaction(transaction.tx);
-    // var gasUsed = tx.gasPrice.mul(transaction.receipt.gasUsed).toNumber();
-    //
-    // assert.strictEqual(ownerAccountOriginalBalance - sendAmount - gasUsed, ownerAccountNewBalance, 'should withdraw from owne
