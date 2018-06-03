@@ -6,7 +6,7 @@ contract Donate {
   uint256 public minimumDonation = 2;
   uint256 public totalDonated;
   uint256 public numberOfDonations;
-  uint256 public maxAmountOfDonations = 50;
+  uint256 public maxAmountOfDonations = 3;
   address[] public donaters;
 
   struct Donater {
@@ -52,6 +52,7 @@ contract Donate {
 
   function transferFundsToCharity(address charity) public {
     charity.transfer(totalDonated);
+    // withdraw funds
     resetContractData();
   }
 

@@ -29,7 +29,11 @@ contract('Donate', function(accounts) {
     var gasUsed = tx.gasPrice.mul(transaction.receipt.gasUsed).toNumber();
 
     assert.strictEqual(ownerAccountOriginalBalance - standardTestDonation - gasUsed, ownerAccountNewBalance, 'should withdraw from donaters account');
-    // TO DO - verify they exist in the contract struct
+    // TO DO - verify they exist in the contract struct and have been inputted correctly
+  });
+
+  it("should let a user submit a charity as a potential winner", async function() {
+    // TO DO: verify the charity exists in the contract struct
   });
 
   it("should not let the same user donate twice", async function() {
@@ -40,5 +44,17 @@ contract('Donate', function(accounts) {
     } catch(error) {
       assert.ok(true, 'expected throw')
     }
+  });
+
+  it("should properly transfer funds to the winning charity", async function() {
+    await contract.donate(charity, {from: donater1, value: standardTestDonation});
+
+    let charityAccountBalance = web3.eth.getBalance(charity).toNumber();
+
+    await contract.transferFundsToCharity(charity);
+
+    let charityAccountNewBalance = web3.eth.getBalance(charity).toNumber();
+
+    assert.strictEqual(charityAccountNewBalance, charityAccountNewBalance + standardTestDonation, 'transfers proper amount')
   });
 });
