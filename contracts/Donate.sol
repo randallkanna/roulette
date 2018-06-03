@@ -3,10 +3,10 @@ pragma solidity ^0.4.4;
 
 contract Donate {
   address public owner;
-  uint256 public minimumDonation;
+  uint256 public minimumDonation = 2;
   uint256 public totalDonated;
   uint256 public numberOfDonations;
-  uint256 public maxAmountOfDonations = 100;
+  uint256 public maxAmountOfDonations = 3;
   address[] public donaters;
 
   struct Donater {
@@ -45,12 +45,20 @@ contract Donate {
   }
 
   function generateCharityWinner() public {
-   /* address charitySelected =  */
+    /* address charitySelected = */
    // find winner
-   /* transferFundsToCharity(charitySelected); */
+    /* transferFundsToCharity(charitySelected); */
   }
 
   function transferFundsToCharity(address charity) public {
     charity.transfer(totalDonated);
+    // withdraw funds
+    resetContractData();
+  }
+
+  function resetContractData(){
+    donaters.length = 0;
+    totalDonated = 0;
+    numberOfDonations = 0;
   }
 }
