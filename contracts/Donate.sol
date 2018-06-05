@@ -6,7 +6,7 @@ contract Donate {
   uint256 public minimumDonation = 2;
   uint256 public totalDonated;
   uint256 public numberOfDonations;
-  uint256 public maxAmountOfDonations = 3;
+  uint256 public maxAmountOfDonations = 5;
   address[] public donaters;
 
   struct Donater {
